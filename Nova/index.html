@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaAI</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="Shared/main.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/1985/1985500.png" type="image/x-icon">
+</head>
+<body onload="checkNetwork()" oncontextmenu="return false">
+    <div id="update-banner" class="update-banner hidden">
+        <h3>Redownload once in a while. I do improve it occasionally. Click <a style="text-decoration: underline; color: white;" href="https://github.com/Nadir-Software/NovaAI" target="_blank">here</a>.</h3>
+        <div onclick="neverShow()" class="button">Never show this again</div>
+    </div>
+
+    <div id="content" class="content">
+        <div id="one-line" class="one-line">
+            <div id="circle" class="circle"></div>
+            <h1 class="answer" id="answer">Greetings</h1>
+        </div>
+
+        <div id="button-row" class="one-line hidden">
+            <a class="button hidden" id="more-btn" target="_blank" rel="noopener noreferrer">More</a>
+            <a class="button hidden" id="search-btn" target="_blank" rel="noopener noreferrer">Search on Wikipedia</a>
+            <a class="button hidden" id="random-btn" target="_blank" rel="noopener noreferrer"  onclick="random()" >Again</a>
+        </div>
+        
+        <input class="query" id="query" onchange="discern()" type="text" placeholder="Ask me anything..." autofocus autocomplete="off">
+    </div>
+
+    <!-- JS -->
+    <script src="Network/network.js"></script>
+    <script src="AI/ai.js"></script>
+    <script src="greeting.js"></script>
+    <script src="Update/update.js"></script>
+</body>
+</html>

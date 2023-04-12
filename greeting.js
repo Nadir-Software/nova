@@ -17,6 +17,15 @@ function getGreeting(hour) {
 }
 
 function type(str) {
+  console.log("Started!");
+
+  againLink.classList.add("hidden");
+  againLink.style.animation = "";
+
+  document.getElementById("query").classList.add("hidden-but-takes-up-space");
+  document.getElementById("query").style.animation = "";
+  document.getElementById("query").tabIndex= "-1";
+
   const element = document.getElementById("answer");
   element.innerText = ""; // Clear the element's innerText before typing
   let i = 0;
@@ -30,6 +39,14 @@ function type(str) {
     i++;
     if (i === str.length) {
       clearInterval(typeInterval);
+      againLink.classList.remove("hidden");
+      againLink.style.animation = "0.25s fade-in";
+
+      document.getElementById("query").style.animation = "0.25s fade-in";
+      document.getElementById("query").classList.remove("hidden-but-takes-up-space");
+      document.getElementById("query").tabIndex= "";
     }
   }, 25);
+
+  console.log("Finished!")
 }

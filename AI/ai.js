@@ -4,8 +4,11 @@ var contentContainer = document.getElementById("content");
 var searchButton = document.getElementById("search-btn");
 var againLink = document.getElementById("random-btn");
 var circle = document.getElementById("circle");
+var userLocation;
 
 function discern() {
+    navigator.geolocation.clearWatch(userLocation);
+
     // Set circle style
     circle.style.animation = "2.5s circle-text infinite";
     
@@ -470,6 +473,25 @@ function discern() {
                         type(answer);
                     })
                 }
+
+
+                
+                // Check for location queries
+                else if (/where am i/i.test(query)) {
+                    const successCallback = (position) => {
+                        console.log(position);
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        type(`Latitude: ${latitude}, Longitude: ${longitude}`);
+                      };
+                      
+                      const errorCallback = (error) => {
+                        console.error(error);
+                      };
+                      
+                      userLocation = navigator.geolocation.watchPosition(successCallback, errorCallback);
+                      
+                }
                         }
                     })
                     .catch(error => {
@@ -482,17 +504,6 @@ function toTitleCase(str) {
     return str.toLowerCase().replace(/(^|\s)\S/g, function(firstLetter) {
       return firstLetter.toUpperCase();
     });
-}
-
-function type(str) {
-    const element = document.getElementById("answer");
-    element.innerText = ""; // Clear the element's innerText before typing
-    var i = 0;
-    if (i < str.length) {
-        element.innerHTML += str.charAt(i);
-        i++;
-        setTimeout(type, 10);
-    }
 }
 
 function random() {

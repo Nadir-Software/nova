@@ -13,7 +13,7 @@ function discern() {
     var query = document.getElementById("query").value;
 
     // Sanitise user query
-    query = query.trim().replace(/[^\w\s]/g, "");
+    query = query.toLowerCase().replace(/[^\w\s]|please/g, '').trim();
 
     // Check for empty query and reload if true
     if (query == "") {

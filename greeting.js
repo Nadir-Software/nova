@@ -18,6 +18,7 @@ function getGreeting(hour) {
 
 function type(str) {
   console.log("Started!");
+  responsiveVoice.speak(str);
 
   againLink.classList.add("hidden");
   againLink.style.animation = "";
@@ -47,6 +48,4 @@ function type(str) {
       document.getElementById("query").tabIndex= "";
     }
   }, 25);
-
-  console.log("Finished!")
 }

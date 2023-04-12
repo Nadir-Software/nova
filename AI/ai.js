@@ -11,12 +11,15 @@ function discern() {
 
     // Set circle style
     circle.style.animation = "2.5s circle-text infinite";
+    document.getElementById("query").style.caretColor = "#0059ff";
     
     // Get user query
     var query = document.getElementById("query").value;
 
-    // Sanitise user query
-    query = query.toLowerCase().replace(/[^\w\s]|please/g, '').trim();
+    // Sanitise user query if not URL
+    if (!/open .*/i.test(query) && query.includes(".")) {
+        query = query.toLowerCase().replace(/[^\w\s]|please/g, '').trim();
+    }
 
     // Check for empty query and reload if true
     if (query == "") {
@@ -475,7 +478,7 @@ function discern() {
                 }
 
 
-                
+
                 // Check for location queries
                 else if (/where am i/i.test(query)) {
                     const successCallback = (position) => {
@@ -491,6 +494,35 @@ function discern() {
                       
                       userLocation = navigator.geolocation.watchPosition(successCallback, errorCallback);
                       
+                }
+
+
+
+                // Check for open queries
+                else if (/open .*/i.test(query)) {
+                    if (query.includes(".")) {
+                        var url = query.toLowerCase().replace("open", "").trim();
+
+                        // Check if URL contains www
+                        if (!url.includes("www")) {
+                            url = "www." + url;
+                        }
+
+                        // Check if URL contains http
+                        if (!url.includes("http")) {
+                            url = "http://" + url;
+                        }
+
+                        urlDecorative = url;
+                    }
+
+                    else if (/google maps/i.test(query)) {
+                        url = "https://www.google.com/maps";
+                        urlDecorative = "Google Maps";
+                    }
+
+                    window.open(url, '_blank');
+                    type(`Opened ${urlDecorative}`)
                 }
                         }
                     })
@@ -550,4 +582,5 @@ function errorAesthetic() {
     circle.classList.remove("circle");
     circle.style.animation = "2.5s circle-error infinite";
     circle.classList.add("circle-error");
+    document.getElementById("query").style.caretColor = "red";
 }

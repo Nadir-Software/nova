@@ -9,15 +9,13 @@ https://nadir-software.github.io/nova/
 1. Click this link: https://github.com/Nadir-Software/NovaAI/archive/refs/heads/main.zip
 2. Open the .zip file in File Explorer, right click, and click "Extract All". Alternatively, use any unzipping software.
 3. Open the newly created folder.
-4. Open "Nova".
-5. Double click on "index.html" to open in your default web browser.
+4. Double click on "index.html" to open in your default web browser.
 
 ### macOS or Linux download
 1. Click this link: https://www.github.com/Nadir-Software/NovaAI/tarball/master
 2. Extract it using your preferred method (in macOS double click, in Linux use your file manager)
 3. Open the newly created folder.
-4. Open "Nova".
-5. Double click on "index.html" to open in your default web browser.
+4. Double click on "index.html" to open in your default web browser.
 
 ## How to use
 ### Basic conversation

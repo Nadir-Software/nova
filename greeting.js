@@ -2,6 +2,7 @@ const today = new Date();
 const hourNow = today.getHours();
 const greeting = getGreeting(hourNow);
 const answerElement = document.getElementById('answer');
+var voiceEnabled = localStorage.getItem("voice") || "enabled";
 type(greeting);
 
 function getGreeting(hour) {
@@ -18,7 +19,10 @@ function getGreeting(hour) {
 
 function type(str) {
   console.log("Started!");
-  responsiveVoice.speak(str);
+
+  if (voiceEnabled == "enabled"){
+    responsiveVoice.speak(str);
+  }
 
   againLink.classList.add("hidden");
   againLink.style.animation = "";

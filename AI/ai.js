@@ -26,6 +26,11 @@ function discern() {
         document.location.href = "index.html"
     }
 
+    // Check for settings query
+    if (query.toLowerCase() == "settings") {
+        document.location.href = "Settings/settings.html"
+    }
+
     // Check if query contains profanity
     fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(query)}`)
         .then(response => response.text())

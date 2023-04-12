@@ -218,21 +218,6 @@ a {
     background-color: rgba(0, 89, 255, 0.2);
 }
 
-.update-banner {
-    background-image: linear-gradient(45deg, transparent, #0059, transparent);
-
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    gap: 5%;
-    justify-content: center;
-
-    text-align: center;
-
-    width: 100vw;
-    height: 4vw;
-}
-
 .hidden {
     display: none;
 }

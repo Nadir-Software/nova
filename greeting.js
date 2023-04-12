@@ -18,8 +18,6 @@ function getGreeting(hour) {
 }
 
 function type(str) {
-  console.log("Started!");
-
   if (voiceEnabled == "enabled"){
     responsiveVoice.speak(str);
   }

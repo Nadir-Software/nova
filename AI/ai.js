@@ -88,8 +88,7 @@ function discern() {
 
                 // Repeat after user
                 if (query.toLowerCase().replace(/ .*/,'') == "say") {
-                    var processedQuerySay = query.replace("say", "");
-                    var processedQuerySay = processedQuerySay.replace("Say", "");
+                    var processedQuerySay = query.replace("say", "").replace("Say", "");
                     type(processedQuerySay)
                 }
 
@@ -165,63 +164,14 @@ function discern() {
 
 
                 // Check if query is asking what something is
-                else if (/what is/i.test(query)) {
-                    const searchTerm = toTitleCase(query.replace(/(\?|\ba\b|\ban\b|\bwhat is\b|\bthe\b)/gi, "").trim());
+                else if ((/what is/i.test(query) || /what are/i.test(query) || /what was/i.test(query) || /what were/i.test(query)) || /who is/i.test(query) || /who was/i.test(query) || /where is/i.test(query) || /where was/i.test(query) && !(query.includes("what are you"))) {
+                    const searchTerm = toTitleCase(query.replace(/(\?|\ba\b|\ban\b|\bwhat is\b|\bwhat are\b|\bwho is\b|\bwho was\b|\bwhere is\b|\bwhere was\b|\bthe\b)/gi, "").trim());
                     fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchTerm)}`)
                     .then(response => response.json())
                     .then(data => {
                         const maxAnswerLength = 150; // Maximum length of the answer text
                         let answer = data.extract.slice(0, maxAnswerLength);
-                        if (answer.length < data.extract.length) {
-                            answer += "... ";
-                        }
 
-                        if (data.originalimage && data.originalimage.source) {
-                            circle.style.backgroundImage = "url('" + data.originalimage.source + "')";
-                            circle.style.scale = "125%";
-                        }
-
-                        if (buttonRow.classList.contains("hidden")) {
-                            buttonRow.classList.remove("hidden");
-                        }
-
-                        if (moreLink.classList.contains("hidden")) {
-                            moreLink.classList.remove("hidden");
-                        }
-
-                        moreLink.href = data.content_urls.desktop.page;
-
-                        contentContainer.style.gap = "5vh";
-                        type(answer);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        const searchTermEncoded = encodeURIComponent(searchTerm);
-                        const searchLink = `https://en.wikipedia.org/w/index.php?search=${searchTermEncoded}&title=Special:Search&fulltext=1`;
-
-                        if (buttonRow.classList.contains("hidden")) {
-                            buttonRow.classList.remove("hidden");
-                        }
-
-                        if (searchButton.classList.contains("hidden")) {
-                            searchButton.classList.remove("hidden");
-                        }
-
-                        searchButton.href =searchLink;
-
-                        contentContainer.style.gap = "5vh";
-                        
-                        type("Sorry, I am not familiar with " + searchTerm + ".");
-                    });
-                }
-
-                else if ((/what are/i.test(query) || /what was/i.test(query) || /what were/i.test(query)) && !(query.includes("what are you") || query.toLowerCase().includes("what are you"))) {
-                    const searchTerm = toTitleCase(query.replace(/(\?|\ba\b|\ban\b|\bwhat are\b|\bthe\b)/gi, "").trim());
-                    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchTerm)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const maxAnswerLength = 150; // Maximum length of the answer text
-                        let answer = data.extract.slice(0, maxAnswerLength);
                         if (answer.length < data.extract.length) {
                         answer += "... ";
                         }
@@ -242,150 +192,6 @@ function discern() {
                         moreLink.href = data.content_urls.desktop.page;
 
                         contentContainer.style.gap = "5vh";
-                        type(answer);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        const searchTermEncoded = encodeURIComponent(searchTerm);
-                        const searchLink = `https://en.wikipedia.org/w/index.php?search=${searchTermEncoded}&title=Special:Search&fulltext=1`;
-                        if (buttonRow.classList.contains("hidden")) {
-                            buttonRow.classList.remove("hidden");
-                        }
-
-                        if (searchButton.classList.contains("hidden")) {
-                            searchButton.classList.remove("hidden");
-                        }
-
-                        searchButton.href =searchLink;
-
-                        contentContainer.style.gap = "5vh";
-                        type("Sorry, I am not familiar with " + searchTerm + ".");
-                    });
-                }
-
-                else if (/where is/i.test(query)) {
-                    const searchTerm = toTitleCase(query.replace(/(\?|\ba\b|\ban\b|\where is\b|\bthe\b)/gi, "").trim());
-                    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchTerm)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const maxAnswerLength = 150; // Maximum length of the answer text
-                        let answer = data.extract.slice(0, maxAnswerLength);
-                        if (answer.length < data.extract.length) {
-                        answer += "... ";
-                        }
-
-                        if (data.originalimage && data.originalimage.source) {
-                            circle.style.backgroundImage = "url('" + data.originalimage.source + "')";
-                            circle.style.scale = "125%";
-                        }
-                        if (buttonRow.classList.contains("hidden")) {
-                                buttonRow.classList.remove("hidden");
-                            }
-
-                        if (moreLink.classList.contains("hidden")) {
-                            moreLink.classList.remove("hidden");
-                        }
-
-                        moreLink.href = data.content_urls.desktop.page;
-
-                        contentContainer.style.gap = "5vh";
-                        type(answer);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        const searchTermEncoded = encodeURIComponent(searchTerm);
-                        const searchLink = `https://en.wikipedia.org/w/index.php?search=${searchTermEncoded}&title=Special:Search&fulltext=1`;
-                        if (buttonRow.classList.contains("hidden")) {
-                            buttonRow.classList.remove("hidden");
-                        }
-
-                        if (searchButton.classList.contains("hidden")) {
-                            searchButton.classList.remove("hidden");
-                        }
-
-                        searchButton.href =searchLink;
-
-                        contentContainer.style.gap = "5vh";
-                        type("Sorry, I am not familiar with " + searchTerm + ".");
-                    });
-                }
-
-                else if (/who is/i.test(query)) {
-                    const searchTerm = toTitleCase(query.replace(/(\?|\ba\b|\ban\b|\who is\b|\bthe\b)/gi, "").trim());
-                    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchTerm)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const maxAnswerLength = 150; // Maximum length of the answer text
-                        let answer = data.extract.slice(0, maxAnswerLength);
-                        if (answer.length < data.extract.length) {
-                        answer += "... ";
-                        }
-
-                        if (data.originalimage && data.originalimage.source) {
-                            circle.style.backgroundImage = "url('" + data.originalimage.source + "')";
-                            circle.style.scale = "125%";
-                        }
-
-                        if (buttonRow.classList.contains("hidden")) {
-                            buttonRow.classList.remove("hidden");
-                        }
-
-                        if (moreLink.classList.contains("hidden")) {
-                            moreLink.classList.remove("hidden");
-                        }
-
-                        moreLink.href = data.content_urls.desktop.page;
-
-                        contentContainer.style.gap = "5vh";                            
-                        type(answer);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        const searchTermEncoded = encodeURIComponent(searchTerm);
-                        const searchLink = `https://en.wikipedia.org/w/index.php?search=${searchTermEncoded}&title=Special:Search&fulltext=1`;
-                        if (buttonRow.classList.contains("hidden")) {
-                            buttonRow.classList.remove("hidden");
-                        }
-
-                        if (searchButton.classList.contains("hidden")) {
-                            searchButton.classList.remove("hidden");
-                        }
-
-                        searchButton.href =searchLink;
-
-                        contentContainer.style.gap = "5vh";
-                        type("Sorry, I am not familiar with " + toTitleCase(searchTerm) + ".");
-                    });
-                }
-
-                else if (/who was/i.test(query)) {
-                    const searchTerm = toTitleCase(query.replace(/(\?|\ba\b|\ban\b|\bwho was\b|\bthe\b)/gi, "").trim());
-                    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchTerm)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const maxAnswerLength = 150; // Maximum length of the answer text
-                        let answer = data.extract.slice(0, maxAnswerLength);
-                        if (answer.length < data.extract.length) {
-                        answer += "... ";
-                        }
-
-                        if (data.originalimage && data.originalimage.source) {
-                            circle.style.backgroundImage = "url('" + data.originalimage.source + "')";
-                            circle.style.scale = "125%";
-                        }
-
-                        if (buttonRow.classList.contains("hidden")) {
-                            buttonRow.classList.remove("hidden");
-                        }
-
-                        if (moreLink.classList.contains("hidden")) {
-                            moreLink.classList.remove("hidden");
-                        }
-
-                        moreLink.href = data.content_urls.desktop.page;
-
-                        contentContainer.style.gap = "5vh";
-
                         type(answer);
                     })
                     .catch(error => {

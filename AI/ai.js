@@ -69,7 +69,6 @@ function discern() {
                     againLink.classList.add("hidden");
                 }
 
-
                 circle.style.background = "";
                 document.getElementById("answer").innerText = "Loading...";
 
@@ -152,12 +151,20 @@ function discern() {
 
 
                 // Check if the query is an arithmetic problem
-                else if (/^\d+(\.\d+)?(\s*[-+\/*\^]\s*\d+(\.\d+)?)+$/.test(query)) {
+                else if (/^(calculate\s+|what\s+is\s+)?\s*\-?\d+(\.\d+)?(\s*[-+\/*%^]\s*\-?\d+(\.\d+)?)+\s*$/i.test(query)) {
                     // If the query is an arithmetic problem, replace "^" with "**" and evaluate it
-                    query = query.replace(/(\?|\ba\b|\ban\b|\bwhat is\b)/gi, "").trim();
+                    query = query.replace(/(calculate\s+|what\s+is\s+|\?|\ba\b|\ban\b)/gi, "").trim();
                     const processedQuery = query.replace(/\^/g, "**");
-                    var answer = eval(processedQuery);
-                    answer = (query + " = " + answer);
+                    let answer;
+
+                    try {
+                        answer = eval(processedQuery);
+                        answer = (query + " = " + answer);
+                    }
+                    
+                    catch (err) {
+                        answer = "Error: " + err.message;
+                    }
                     type(answer);
                 }
 
@@ -173,7 +180,7 @@ function discern() {
                         let answer = data.extract.slice(0, maxAnswerLength);
 
                         if (answer.length < data.extract.length) {
-                        answer += "... ";
+                            answer += "... ";
                         }
 
                         if (data.originalimage && data.originalimage.source) {
@@ -206,7 +213,7 @@ function discern() {
                             searchButton.classList.remove("hidden");
                         }
 
-                        searchButton.href =searchLink;
+                        searchButton.href = searchLink;
 
                         contentContainer.style.gap = "5vh";
                         type("Sorry, I am not familiar with " + searchTerm + ".");
@@ -230,7 +237,6 @@ function discern() {
                         var definition = data[0].meanings[0].definitions[0].definition;
                         definition = toTitleCase(word) + " means " + definition.toLowerCase();
                     
-                        // Set the definition as the innerText of an element with ID of "answer"
                         type(definition);
                         })
                         .catch(error => {
@@ -327,9 +333,124 @@ function discern() {
                         urlDecorative = url;
                     }
 
-                    else if (/google maps/i.test(query)) {
-                        url = "https://www.google.com/maps";
-                        urlDecorative = "Google Maps";
+                    else if (/wikipedia/i.test(query)) {
+                        url = "https://www.wikipedia.org";
+                        urlDecorative = "Wikipedia";
+                    }
+
+                    else if (/google/i.test(query)) {
+                        url = "https://www.google.com";
+                        urlDecorative = "Google";
+                    }
+
+                    else if (/reddit/i.test(query)) {
+                        url = "https://www.reddit.com";
+                        urlDecorative = "Reddit";
+                    }
+
+                    else if (/youtube/i.test(query)) {
+                        url = "https://www.youtube.com";
+                        urlDecorative = "YouTube";
+                    }
+
+                    else if (/twitter/i.test(query)) {
+                        url = "https://www.twitter.com";
+                        urlDecorative = "Twitter";
+                    }
+
+                    else if (/github/i.test(query)) {
+                        url = "https://www.github.com";
+                        urlDecorative = "GitHub";
+                    }
+
+                    else if (/instagram/i.test(query)) {
+                        url = "https://www.instagram.com";
+                        urlDecorative = "Instagram";
+                    }
+
+                    else if (/linkedin/i.test(query)) {
+                        url = "https://www.linkedin.com";
+                        urlDecorative = "LinkedIn";
+                    }
+
+                    else if (/twitch/i.test(query)) {
+                        url = "https://www.twitch.tv";
+                        urlDecorative = "Twitch";
+                    }
+
+                    else if (/discord/i.test(query)) {
+                        url = "https://www.discord.com";
+                        urlDecorative = "Discord";
+                    }
+                    
+                    else if (/steam/i.test(query)) {
+                        url = "https://store.steampowered.com";
+                        urlDecorative = "Steam";
+                    }
+
+                    else if (/spotify/i.test(query)) {
+                        url = "https://www.spotify.com";
+                        urlDecorative = "Spotify";
+                    }
+                    
+                    else if (/netflix/i.test(query)) {
+                        url = "https://www.netflix.com";
+                        urlDecorative = "Netflix";
+                    }
+
+                    else if (/amazon/i.test(query)) {
+                        url = "https://www.amazon.com";
+                        urlDecorative = "Amazon";
+                    }
+
+                    else if (/ebay/i.test(query)) {
+                        url = "https://www.ebay.com";
+                        urlDecorative = "Ebay";
+                    }
+
+                    else if (/etsy/i.test(query)) {
+                        url = "https://www.etsy.com";
+                        urlDecorative = "Etsy";
+                    }
+
+                    else if (/facebook/i.test(query)) {
+                        url = "https://www.facebook.com";
+                        urlDecorative = "Facebook";
+                    }
+
+                    else if (/snapchat/i.test(query)) {
+                        url = "https://www.snapchat.com";
+                        urlDecorative = "Snapchat";
+                    }
+
+                    else if (/tiktok/i.test(query)) {
+                        url = "https://www.tiktok.com";
+                        urlDecorative = "TikTok";
+                    }
+
+                    else if (/tumblr/i.test(query)) {
+                        url = "https://www.tumblr.com";
+                        urlDecorative = "Tumblr";
+                    }
+
+                    else if (/imgur/i.test(query)) {
+                        url = "https://www.imgur.com";
+                        urlDecorative = "Imgur";
+                    }
+
+                    else if (/chat gpt/i.test(query) || /chatgpt/i.test(query)) {
+                        url = "https://chat.openai.com/chat";
+                        urlDecorative = "ChatGPT";
+                    }
+
+                    else if (/openai/i.test(query)) {
+                        url = "https://openai.com";
+                        urlDecorative = "OpenAI";
+                    }
+
+                    else if (/dalle/i.test(query)) {
+                        url = "https://labs.openai.com";
+                        urlDecorative = "DALLE";
                     }
 
                     window.open(url, '_blank');

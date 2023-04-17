@@ -37,6 +37,9 @@ Nova is capable of most basic arithmetic.
 ### Memory
 Nova can remember one thing you tell it. Use `Remember <thing to remember>` to instruct Nova to remember it; use `Recall` to instruct Nova to recall what you said.
 
+### URL opening
+Type `Open <URL>` or `Open <name>` to open that website in a new tab.
+
 ### Geolocation
 Type `Where am I?` and Nova will tell you.
 > Your location is not used until you ask and is turned off once you ask your next question.
